@@ -1,0 +1,8 @@
+Your previous final answer could not be parsed as a valid <{result_tag}> JSON payload.
+
+Fix only the JSON formatting and missing or invalid required fields.
+Preserve the same intended content unless a small change is required to satisfy the schema.
+Return exactly one <{result_tag}>...</{result_tag}> block and nothing else.
+
+Parser feedback:
+{parser_feedback}

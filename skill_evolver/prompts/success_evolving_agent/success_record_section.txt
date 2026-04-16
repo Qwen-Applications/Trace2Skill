@@ -1,0 +1,36 @@
+## Understanding Success Analysis Records
+
+Each record represents one task where the agent succeeded. A record has:
+- **instance_id**: identifier for the successful task
+- **items**: list of success-memory findings extracted from the success analysis
+
+Each item has type **"success_memory"** and describes a reusable strategy that
+contributed to a successful outcome.
+
+### Success Memory Items
+
+A **Success Memory** item captures **what worked well** and what the agent
+should keep doing in similar tasks. Fields:
+
+| Field | Description |
+|-------|-------------|
+| **title** | Short name of the successful pattern |
+| **description** | One-sentence summary of the pattern |
+| **content** | Detailed explanation of the workflow, check, or tactic that helped the agent succeed |
+
+Use Success Memory items to reinforce robust workflows, reusable examples,
+verification checklists, and skill organization patterns that repeatedly lead
+to correct outcomes.
+
+### How to Use Success Records
+
+1. **Identify repeatable wins**: promote workflows that are clearly reusable
+2. **Generalize carefully**: keep task-specific details out unless they reveal a broader pattern
+3. **Prefer concise reinforcement**: strengthen existing correct guidance before adding new sections
+4. **Keep progressive disclosure**: move details into references when they are useful but not universal
+
+### What to Ignore
+
+- One-off wins that do not generalize
+- Generic advice unsupported by the record content
+- Redundant guidance that competent models already know

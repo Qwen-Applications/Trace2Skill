@@ -1,0 +1,16 @@
+The orchestrator ran your merged script against the mapped original tests and found failures.
+
+Reduced group:
+<reduced_group_json>
+{reduced_group_json}
+</reduced_group_json>
+
+Current payload:
+<current_payload_json>
+{current_payload_json}
+</current_payload_json>
+
+Failure feedback:
+{failure_feedback}
+
+Revise the merged script and return a full replacement `<merged_script_artifact>...</merged_script_artifact>` payload.

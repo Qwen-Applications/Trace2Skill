@@ -1,0 +1,1 @@
+2. Mixed compressed analysis patterns from tasks where agents using this skill both failed and succeeded

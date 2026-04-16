@@ -1,0 +1,3 @@
+Your previous response could not be parsed as valid semantic patch markdown. Keep the same intended edits/content, but fix only the formatting. Here is the exact parser feedback: {feedback} Use this exact format:
+{example}
+Output ONLY the corrected semantic patch block(s).

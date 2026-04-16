@@ -1,0 +1,1 @@
+The following patterns combine recurring failures and repeated successful behaviors. Use these to decide what skill guidance should be fixed, strengthened, or preserved.

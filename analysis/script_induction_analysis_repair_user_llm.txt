@@ -1,0 +1,10 @@
+Your previous markdown output did not satisfy the required schema.
+
+Parser feedback:
+{parser_feedback}
+
+Rewrite the full output so it strictly matches the required Markdown format.
+Do not add explanations.
+
+Previous output:
+{previous_output}

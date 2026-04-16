@@ -1,0 +1,8 @@
+All error records have been processed. Review the complete skill folder:
+1. Remove duplicate or contradictory guidance
+2. Ensure SKILL.md is under {max_skill_lines} lines
+3. Verify all reference links in SKILL.md point to existing files
+4. Merge overlapping warnings
+5. Ensure consistent style (imperative form)
+6. Check progressive disclosure (essentials in SKILL.md, details in references)
+7. If SKILL.md exceeds or approaches the line limit, extract self-contained subsections into separate references/*.md files and replace the moved content with a brief summary and a link to the new reference file

@@ -1,0 +1,1 @@
+## Compressed Failure Patterns (Batch {batch_idx}/{total_batches})

@@ -1,0 +1,55 @@
+## Modification Strategies
+
+Apply whichever strategies are appropriate for the given success evidence. Not
+every record requires all strategies.
+
+### Strategy 1: Reinforce Repeatable Wins
+Identify repeatable wins and reinforce them in the skill folder.
+- If multiple successful runs use the same workflow, make that workflow easier to repeat
+- If success depends on a concrete API pattern or validation habit, add a concise example
+- Success Memory items show what the agent should keep doing — distill them into actionable guidance
+- BE SPECIFIC. "Follow good verification practices" is weak.
+  "Read back the edited range and confirm the values before saving" is useful.
+- Prefer guidance that helps the next agent reproduce the successful behavior, not admire it abstractly
+
+### Strategy 2: Tune Degrees of Freedom Around Success
+Match specificity to how fragile the successful workflow is:
+- **High freedom** (text instructions): when multiple successful approaches exist
+- **Medium freedom** (pseudocode, parameters): when a preferred successful pattern exists
+- **Low freedom** (exact scripts, few parameters): when success depends on a fragile sequence
+
+When the same successful pattern appears repeatedly, TIGHTEN the freedom enough to make it repeatable:
+- Agents consistently validate the output before writing -> add a mandatory verification checkpoint
+- Agents consistently use one API pattern successfully -> include the exact snippet
+- Agents succeed by following a stable ordering of steps -> add a short checklist
+
+When current guidance is too rigid and successful runs show a better variation, LOOSEN:
+- Loosen or remove guidance that repeatedly gets in the way of successful workflows.
+- Replace over-prescriptive steps with parameterized guidance that preserves the winning pattern
+- Remove old constraints that force unnecessary detours away from proven workflows
+
+### Strategy 3: Restructure for Reuse
+Move detailed but reusable success patterns from SKILL.md into reference files
+when that improves repeatability without adding clutter:
+- SKILL.md: core workflow, critical validation habits, links to proven patterns
+- references/*.md: fuller examples, operation-specific winning patterns, edge-case walkthroughs
+
+Rules:
+- Reference files must be linked from SKILL.md with a clear description of when to read them
+- Keep references one level deep (no references from within references)
+- Each reference file should have a table of contents if >100 lines
+- Name files descriptively: references/verified-write-workflows.md, not references/ref1.md
+
+### Strategy 4: Keep Reinforcement Concise
+- Strengthen existing correct guidance before adding brand-new sections
+- Merge overlapping success tips into one authoritative pattern
+- Replace long celebrations of success with short, reusable examples
+- Remove guidance any competent LLM already knows
+- Ignore one-off wins that do not generalize
+
+### Strategy 5: Other Best Practices
+- Maintain YAML frontmatter (name, description) unchanged
+- Use imperative form ("Verify the output" not "You should verify the output")
+- Ensure progressive disclosure: SKILL.md for essentials, references for depth
+- Do not add README.md, CHANGELOG.md, or auxiliary documentation files
+- Preserve existing correct code examples and working guidance

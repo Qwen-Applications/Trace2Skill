@@ -1,0 +1,45 @@
+You are an expert in AI agent trajectory analysis.
+
+## Task Description
+You will be given two spreadsheet problem-solving trajectories produced by:
+- <raw_agent>: an agent without domain skills
+- <agent_with_skill>: the same agent augmented with a spreadsheet skill file
+
+Inside the agent trajectories:
+- The system prompt defines the agent's action pattern.
+- Assistant messages contain the agent's reasoning and actions.
+- User messages contain observations returned by the environment.
+
+Your task is to analyze how adding the skill changes the behavior of <raw_agent> and to extract a set of distinct **Behavior Change Items**.
+
+A Behavior Change Item must describe a systematic and causal change in behavior that:
+- arises from guidance in the skill file,
+- alters how the agent plans, reasons, or acts,
+- would generalize to other spreadsheet tasks (not just this specific example).
+
+## Important Rules
+1. **Causality**: Only extract behavior changes that can be reasonably attributed to the skill file.  
+   Do NOT include random, coincidental, or task-specific differences.
+2. **Non-redundancy**: Do NOT produce overlapping or semantically duplicate items.
+3. **Generality**: Each behavior change must be abstract enough to apply to other spreadsheet tasks.
+4. **Comparative grounding**: Each item must be supported by a contrast between <raw_agent> and <agent_with_skill>.
+5. **Clarity**: Each item should describe *what changed* and *which part of the skill caused it*.
+6. **Brevity constraint**: You may extract **at most 3 Behavior Change Items**. So only extract the most significant and generalizable items.
+
+## Output Format (STRICT)
+
+Your output must strictly follow this Markdown template for each item:
+
+```
+# Behavior Change Item i  
+## Title  
+<Short descriptive title of the behavior change>
+
+## Description  
+<One-sentence summary of the behavior change>
+
+## Content  
+<1–3 sentences explaining:
+- how the behavior differs between the two agents, and  
+- which guidance in the skill file leads to this change>
+```

@@ -1,0 +1,58 @@
+## Understanding Error Analysis Records
+
+Each record represents one task where the agent failed. A record has:
+- **instance_id**: identifier for the failed task
+- **items**: list of findings extracted from the failure analysis
+
+Each item has a **type** — either "failure_cause" or "failure_memory" — and
+a set of fields. Understanding these two item types and their fields is
+critical for deciding how to modify the skill folder.
+
+### Failure Cause Items
+
+A **Failure Cause** item identifies **what went wrong** — the root cause of
+the agent's failure on that task. Fields:
+
+| Field | Description |
+|-------|-------------|
+| **title** | Short name of the failure (e.g. "Incorrect Row Referencing") |
+| **description** | One-sentence summary of the failure |
+| **content** | Detailed explanation (1-3 sentences) of the root cause mechanism — what the agent did wrong, what it should have done, and why the result was incorrect |
+
+Use Failure Cause items to understand **root cause mechanisms**. The `content`
+field is the most important — it tells you exactly what went wrong and often
+implies what guidance was missing. Analyze the root cause yourself to decide
+the best skill folder modification strategy.
+
+### Failure Memory Items
+
+A **Failure Memory** item describes **what the agent should have known or done
+differently** — a lesson learned from the failure. Fields:
+
+| Field | Description |
+|-------|-------------|
+| **title** | Short name of the lesson (e.g. "Validate Data Structure Before Formulas") |
+| **description** | One-sentence summary of the lesson |
+| **content** | Detailed explanation (1-3 sentences) of what the agent should remember for future tasks — specific techniques, checks, or patterns to follow |
+
+Use Failure Memory items to understand **what guidance would have helped**.
+The `content` field describes actionable lessons that the agent should have
+known. Your job is to distill these lessons into concise, well-placed
+instructions within the skill folder.
+
+### How to Use Both Item Types Together
+
+1. **Identify patterns**: Look for the same failure cause appearing across
+   multiple records — these are high-priority targets for skill folder changes
+2. **Cross-reference**: When a Failure Cause and a Failure Memory from the
+   same record point to the same gap, that's strong evidence for a skill change
+3. **Prioritize by frequency**: A failure cause appearing in 10 records
+   matters more than one appearing in 1 record
+4. **Distill, don't copy**: Convert Failure Memory lessons into concise,
+   actionable skill instructions — don't paste them verbatim
+
+### What to Ignore
+
+- One-off failures that cannot be generalized to other tasks
+- Failures about general reasoning ability (not fixable by skill folder changes)
+- Failures about file paths, environment issues, or infrastructure problems

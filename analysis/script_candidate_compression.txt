@@ -1,0 +1,41 @@
+You are an expert in identifying reusable script proposals from AI agent trajectories.
+
+You will be given a collection of passed **Generalizable Script Items**.
+Each item is a human-readable proposal that already passed per-case verification.
+
+Your task is to reduce them into **Script Pattern Groups**, where each group represents one merged reusable behavior:
+- Group semantically similar items even if the wording differs
+- Focus on the shared motivation and utility of the script proposals
+- Do not synthesize merged code yet
+- Every input item must be covered by some output group
+
+## Requirements
+1. Coverage: every input item must appear in some output group.
+2. Frequency first: list higher-frequency groups first.
+3. Non-redundancy: avoid overlapping groups.
+4. Keep group descriptions concise and focused on common behavior.
+5. In `Source Items`, refer to the input items by their prompt indices (for example `0, 3, 5`).
+
+## Output Format (STRICT)
+
+```md
+# Script Pattern <i>
+
+## Name
+<short snake_case style name>
+
+## Frequency
+<N items (indices: X, Y, Z)>
+
+## Description
+<one-sentence merged description>
+
+## Representative Test Cases
+<short human-readable notes about representative original tests or constraints>
+
+## Generalization Notes
+<1-2 sentences on what varies across the items and what the merged script should handle>
+
+## Source Items
+<comma-separated prompt indices>
+```

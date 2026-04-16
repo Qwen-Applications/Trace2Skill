@@ -1,0 +1,2 @@
+
+**WARNING**: SKILL.md is approaching the line limit. Consider extracting detailed content into references/ files.

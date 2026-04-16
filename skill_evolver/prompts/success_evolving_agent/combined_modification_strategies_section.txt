@@ -1,0 +1,53 @@
+## Modification Strategies
+
+Apply whichever strategies are appropriate for the mixed evidence. Not every
+record requires all strategies.
+
+### Strategy 1: Balance Failure Prevention with Proven Success
+Use repeated failures to identify what must change, and repeated successes to
+identify what must survive the change.
+- Start with repeated failures, but prefer fixes that preserve proven successful workflows.
+- If a failure pattern and a success pattern point to the same root issue, write one targeted instruction that prevents the mistake and reinforces the working approach
+- Distill Failure Memory items into actions the agent must take, and Success Memory items into actions the agent should keep taking
+- BE SPECIFIC. "Handle formulas carefully" is weak.
+  "Insert the formula, recalculate, then read back the result before saving" is useful.
+
+### Strategy 2: Adjust Degrees of Freedom from Both Signals
+Match specificity to the evidence:
+- **High freedom** (text instructions): when multiple successful approaches avoid the failures
+- **Medium freedom** (pseudocode, parameters): when one family of workflows works best
+- **Low freedom** (exact scripts, few parameters): when repeated failures disappear only with a precise sequence
+
+When failures repeat in the same area, TIGHTEN the guidance:
+- Add exact snippets, checklists, and "DO NOT" warnings where agents keep failing
+
+When success evidence shows the current guidance is too rigid, LOOSEN:
+- When success evidence shows the current guidance is too rigid, loosen it without reintroducing known failure modes.
+- Remove prescriptive steps that successful runs consistently bypass safely
+- Generalize instructions that are blocking valid successful variations
+
+### Strategy 3: Organize Around Reusable Patterns
+Keep SKILL.md focused on the minimum workflow that both avoids common failures
+and preserves proven wins. Move detailed variants into references when helpful:
+- SKILL.md: critical workflow, warnings, validation checkpoints, links to references
+- references/*.md: fuller examples, edge cases, operation-specific working patterns
+
+Rules:
+- Reference files must be linked from SKILL.md with a clear description of when to read them
+- Keep references one level deep (no references from within references)
+- Each reference file should have a table of contents if >100 lines
+- Name files descriptively: references/formula-validation-patterns.md, not references/ref1.md
+
+### Strategy 4: Prefer Evidence-Weighted Concision
+- Remove redundant guidance that says the same thing twice
+- Consolidate overlapping warnings and successful examples into one authoritative pattern
+- Keep instructions short enough to survive alongside the rest of the agent context
+- Ignore one-off failures or successes that do not generalize
+- Prefer changes supported by repeated evidence over anecdotes
+
+### Strategy 5: Other Best Practices
+- Maintain YAML frontmatter (name, description) unchanged
+- Use imperative form ("Verify the output" not "You should verify the output")
+- Ensure progressive disclosure: SKILL.md for essentials, references for depth
+- Do not add README.md, CHANGELOG.md, or auxiliary documentation files
+- Preserve existing correct code examples and working guidance

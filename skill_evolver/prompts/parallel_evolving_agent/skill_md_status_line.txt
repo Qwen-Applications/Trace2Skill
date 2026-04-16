@@ -1,0 +1,1 @@
+- SKILL.md: {skill_lines} lines (limit: {max_skill_lines})

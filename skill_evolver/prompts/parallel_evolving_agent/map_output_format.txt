@@ -1,0 +1,21 @@
+## Output Format
+
+Respond with JSON in a fenced `json` block:
+
+```json
+{"reasoning":"2-3 sentences: what failures you see and what changes address them","edits":[{"file":"SKILL.md","op":"append_to_section","target_section":"## Section Name","content":"new content to add"}],"changelog_entries":["Brief description of change"]}
+```
+
+Supported operations:
+- "insert_after": insert content after target_text within target_section
+- "insert_before": insert content before target_text within target_section
+- "append_to_section": append content at end of target_section
+- "replace_in_section": replace old_text with content within target_section
+- "add_section": add new section (use after_section for placement)
+- "delete_section": remove target_section entirely
+- "create": create a new file (file + content)
+- "delete_file": delete a file
+
+CRITICAL: Propose MINIMAL, TARGETED edits. Each edit should be a few lines of content, not entire sections. Multiple small edits > one large rewrite.
+
+IMPORTANT — file creation rule: if you propose a "create" op for a new references/*.md file, you MUST also include an edit to SKILL.md (or the relevant parent file) that adds a link and a brief description of when to read the new file. Likewise, a "delete_file" op MUST be paired with an edit that removes the corresponding link from SKILL.md.

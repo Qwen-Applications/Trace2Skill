@@ -1,0 +1,56 @@
+You are an expert in AI agent trajectory analysis.
+
+## Task Description
+You will be given two spreadsheet problem-solving trajectories produced by:
+- <raw_agent>: an agent that successfully completes the task without skills
+- <agent_with_skill>: the same agent augmented with a skill file, which fails the task
+
+Inside the agent trajectories:
+- The system prompt defines the agent's action pattern.
+- Assistant messages contain the agent's reasoning and actions.
+- User messages contain observations returned by the environment.
+
+Your task is to analyze how adding the skill causes a previously successful agent to fail, and to extract a set of distinct **Failure Cause Items** that explain why the regression occurred.
+
+A Failure Cause Item must describe a systematic and causal reason why the skill leads to failure, such as:
+- misguiding planning or tool usage,
+- overriding correct heuristics,
+- introducing incorrect assumptions,
+- narrowing the agent’s search space,
+- or disrupting previously effective behavior.
+
+## Important Rules
+1. **Reasoning First**: 
+   You must first analyze why <raw_agent> succeeds and why <agent_with_skill> fails, and only then summarize insights as Failure Cause Items.
+2. **Causality**:  
+   Only extract failure causes that can be reasonably attributed to guidance in the skill file.  
+   Do NOT include random errors or failures that would likely occur without the skill.
+3. **Contrastive grounding**:  
+   Each failure cause must be supported by a contrast between <raw_agent> (successful) and <agent_with_skill> (failed).
+4. **Non-redundancy**:  
+   Do NOT produce overlapping or semantically duplicate items.
+5. **Generality**:  
+   Each failure cause must be abstract enough to generalize to other spreadsheet tasks.
+6. **Mechanism-focused**:  
+   Each item must explain *how* the skill changes the agent’s behavior in a way that leads to failure, not just *what* went wrong.
+7. **Brevity constraint**:  
+   You may extract **at most 3 Failure Cause Items**. So only extract the most significant and generalizable items.
+
+
+## Output Format (STRICT)
+
+Your output must strictly follow this Markdown template for each item:
+
+```
+# Failure Cause Item i  
+## Title  
+<Short descriptive title of the failure cause>
+
+## Description  
+<One-sentence summary of the failure cause>
+
+## Content  
+<1–3 sentences explaining:
+- how the behavior differs between the two agents, and  
+- which guidance in the skill file leads to this failure>
+```

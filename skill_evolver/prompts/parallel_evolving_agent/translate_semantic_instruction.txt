@@ -1,0 +1,2 @@
+
+Translate this semantic instruction into one or more exact patch edit operations for ALL listed files. Use exact text anchors when possible.

@@ -1,0 +1,14 @@
+Here is the target agent's task execution log:
+
+<agent_log>
+{agent_log}
+</agent_log>
+
+Please analyze the trajectory and identify the most useful reusable script or fix items.
+
+Working directory: {working_dir}
+
+Existing skill scripts (do not duplicate these unless you are proposing a fix):
+{existing_scripts}
+
+Return only the required Markdown items.

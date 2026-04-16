@@ -1,0 +1,24 @@
+Repair the induced script using the locked test failures below.
+
+Working directory: {working_dir}
+Copied target-agent workspace: {working_dir}/agent_work
+Note: `agent_work/` is copied trajectory evidence. The file you must repair is the candidate script at `script_path`, not anything under `agent_work/`.
+Candidate id: {candidate_id}
+Script path: {script_path}
+
+Candidate metadata:
+<candidate_json>
+{candidate_json}
+</candidate_json>
+
+Locked test suite:
+<test_suite_json>
+{test_suite_json}
+</test_suite_json>
+
+Concrete failures:
+<failure_feedback>
+{failure_feedback}
+</failure_feedback>
+
+Return only the strict `<candidate_repair>...</candidate_repair>` JSON payload before ACTION: TASK_COMPLETE.

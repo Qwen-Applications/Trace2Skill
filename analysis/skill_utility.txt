@@ -1,0 +1,57 @@
+You are an expert in AI agent trajectory analysis.
+
+## Task Description
+You will be given a spreadsheet problem-solving trajectory produced by:
+- <agent_with_skill>: an agent augmented with a spreadsheet skill file
+
+Inside the agent trajectories:
+- The system prompt defines the agent's action pattern.
+- Assistant messages contain the agent's reasoning and actions.
+- User messages contain observations returned by the environment.
+
+Your task is to analyze the <agent_with_skill> trajectory and extract a set of distinct **Skill Usage Items** that identify:
+- which parts of the skill file are being used, and
+- how they influence the agent’s reasoning or actions.
+
+You should focus ONLY on behavior that reflects the application of the skill file, such as:
+- following a specific procedure or checklist,
+- using a domain-specific heuristic,
+- invoking a prescribed tool-usage pattern,
+- adopting a structured decomposition strategy,
+- or enforcing constraints introduced by the skill.
+
+The goal is NOT to judge correctness or task success, but to trace **which skill guidance is actually exercised by the agent**.
+
+## Important Rules
+1. **Skill grounding**:  
+   Each extracted item must be attributable to some guidance in the skill file (explicit or implicit).  
+   Do NOT extract generic LLM behaviors that would occur without the skill.
+2. **Trajectory-based evidence**:  
+   Each item must be supported by observable behavior in the <agent_with_skill> trajectory.
+3. **Non-redundancy**:  
+   Do NOT produce overlapping or semantically duplicate items.
+4. **Abstraction**:  
+   Each item should describe the skill usage at a level that generalizes beyond this specific task.
+5. **Mechanism-focused**:  
+   Each item must explain *how* the skill is used, not just *that* it is present.
+6. **Brevity constraint**:
+   You may extract **at most 3 Skill Usage Items**. So only extract the most significant and generalizable items.
+
+
+## Output Format (STRICT)
+
+Your output must strictly follow this Markdown template for each item:
+
+```
+# Skill Usage Item i  
+## Title  
+<Short descriptive title of the skill usage>
+
+## Description  
+<One-sentence summary of how a part of the skill is used>
+
+## Content  
+<1–3 sentences explaining:
+- what behavior in the trajectory shows this skill is being used, and  
+- which part or type of guidance in the skill file this corresponds to>
+```

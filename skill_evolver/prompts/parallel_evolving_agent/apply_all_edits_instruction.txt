@@ -1,0 +1,2 @@
+
+Apply ALL edits from the patch. Produce the complete file contents for every file that changes.

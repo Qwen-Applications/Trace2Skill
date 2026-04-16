@@ -1,0 +1,57 @@
+## Modification Strategies
+
+Apply whichever strategies are appropriate for the given failures. Not every
+record requires all strategies.
+
+### Strategy 1: Add Instructions or Specifications
+When failures reveal missing guidance, add targeted instructions to the skill folder.
+- If errors share the same root cause, add a prominent warning
+- If errors involve wrong API usage, add a correct code example
+- Failure Memory items suggest what the agent should have known — distill
+  these into actionable instructions (see "Understanding Error Analysis
+  Records" below for details on Failure Memory items)
+- BE SPECIFIC. "Be careful with formulas" is useless.
+  "Use ArrayFormula(ref=..., text=...) for array formulas in openpyxl" is useful.
+- Add "DO NOT" warnings for common mistakes with concrete wrong/right examples
+
+### Strategy 2: Adjust Degrees of Freedom
+Match specificity to fragility:
+- **High freedom** (text instructions): when multiple approaches are valid
+- **Medium freedom** (pseudocode, parameters): when a preferred pattern exists
+- **Low freedom** (exact scripts, few parameters): when operations are fragile
+
+When errors REPEATEDLY occur in the same area, TIGHTEN the freedom:
+- Agents keep forgetting recalculation -> mandatory checklist with exact command
+- Agents keep using wrong API -> provide exact code snippet, not general guidance
+- Agents keep misinterpreting -> add explicit constraints and "DO NOT" boxes
+
+When the skill folder is overly rigid about something that varies by context, LOOSEN:
+- Remove prescriptive steps that don't apply to all task types
+- Replace exact code with parameterized pseudocode
+
+### Strategy 3: Restructure Skill Folder Layout
+Move detailed or specialized content from SKILL.md into reference files to
+reduce cognitive load and enable progressive disclosure:
+- SKILL.md: essential workflow, high-level guidance, critical warnings
+- references/*.md: detailed examples, edge cases, operation-specific guidance
+
+Rules:
+- Reference files must be linked from SKILL.md with a clear description of
+  when to read them
+- Keep references one level deep (no references from within references)
+- Each reference file should have a table of contents if >100 lines
+- Name files descriptively: references/formula-patterns.md, not references/ref1.md
+
+### Strategy 4: Improve Conciseness
+- Remove redundant sections that say the same thing differently
+- Merge overlapping warnings into one authoritative location
+- Replace verbose explanations with concise examples
+- Remove guidance any competent LLM already knows
+- If the same point appears in multiple places, consolidate
+
+### Strategy 5: Other Best Practices
+- Maintain YAML frontmatter (name, description) unchanged
+- Use imperative form ("Verify the output" not "You should verify the output")
+- Ensure progressive disclosure: SKILL.md for essentials, references for depth
+- Do not add README.md, CHANGELOG.md, or auxiliary documentation files
+- Preserve existing correct code examples and working guidance

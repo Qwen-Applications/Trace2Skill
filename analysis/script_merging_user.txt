@@ -1,0 +1,39 @@
+You are merging one reduced script group into a single implementation.
+
+Working directory: {working_dir}
+
+**IMPORTANT — read `all_test_args.json` first** (it is in your working directory).
+It maps every test_id to its `script_args`. Your merged script must accept every
+arg format listed there without argparse errors (exit code 2).
+
+Reduced group:
+<reduced_group_json>
+{reduced_group_json}
+</reduced_group_json>
+
+Sample source scripts:
+{sample_scripts}
+
+Sample representative tests:
+{sample_tests}
+
+Return only the strict `<merged_script_artifact>...</merged_script_artifact>` JSON payload using this schema:
+
+<merged_script_artifact>{
+  "reduced_item_id": "reduced_script_0001",
+  "name": "snake_case_name",
+  "description": "merged behavior summary",
+  "merged_script": {
+    "docstring": "full docstring including usage",
+    "code": "complete standalone python script",
+    "args_spec": ["..."]
+  },
+  "merge_rationale": "how the sampled candidates were unified",
+  "prompt_sample_source_global_item_ids": ["g_00001", "g_00002"],
+  "prompt_sample_test_refs": [
+    {
+      "global_item_id": "g_00001",
+      "test_id": "reality_01"
+    }
+  ]
+}</merged_script_artifact>

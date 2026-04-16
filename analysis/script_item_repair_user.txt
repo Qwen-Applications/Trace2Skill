@@ -1,0 +1,18 @@
+The orchestrator verified your previous payload and found problems.
+
+Induced item:
+<item_json>
+{item_json}
+</item_json>
+
+Current payload:
+<current_payload_json>
+{current_payload_json}
+</current_payload_json>
+
+Verification failures:
+{failure_feedback}
+
+Revise the script first. Only revise the reality test case if the feedback shows the current case is incorrect or incomplete.
+
+Return a full replacement payload using the same strict `<item_extraction>...</item_extraction>` schema.

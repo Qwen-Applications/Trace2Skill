@@ -1,0 +1,46 @@
+## Output Format
+
+Respond with one or more semantic patch blocks using this exact markdown
+schema:
+
+===== PATCH START =====
+Reasoning:
+2-3 sentences explaining the failures and why these changes help.
+
+Changelog:
+- Brief description of change
+
+Items:
+
+[ITEM_1_START]
+Target File: SKILL.md
+Edit Intent: Add guidance for validating transformed values before writing them
+Location Hint: Add near the section that discusses validation before final answers
+Change Instruction:
+Add concise instructions, a wrong/right example, and a pre-write checklist.
+
+[ITEM_2_START]
+Target File: references/algorithm-patterns.md, SKILL.md
+Edit Intent: Add reference file for algorithm patterns and link it from SKILL.md
+Location Hint: references/algorithm-patterns.md is a new file; SKILL.md pointer goes in § Tools & References
+Change Instruction:
+Create references/algorithm-patterns.md with content describing common algorithm
+patterns and when to apply each one.
+In SKILL.md add a link "See [Algorithm Patterns](references/algorithm-patterns.md)"
+in the § Tools & References section.
+===== PATCH END =====
+
+Rules:
+- Use one or more PATCH blocks following the format above
+- Each item must start with [ITEM_X_START]
+- Each item must contain exactly these fields:
+  Target File, Edit Intent, Location Hint, Change Instruction
+- Keep items minimal, specific, and non-redundant
+- Use semantic instructions, not exact line edits
+- If you propose a new references/*.md file, do NOT use a separate SKILL.md
+  item. Instead, use ONE combined Item:
+  • Target File: references/new-file.md, SKILL.md
+  • Location Hint: references/new-file.md is a new file; SKILL.md pointer
+    goes in § <section name>
+  • Change Instruction: describe BOTH the new file content AND the exact link
+    text/location to add in SKILL.md.

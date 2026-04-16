@@ -1,0 +1,1 @@
+2. Mixed analysis records from tasks where agents using this skill both failed and succeeded

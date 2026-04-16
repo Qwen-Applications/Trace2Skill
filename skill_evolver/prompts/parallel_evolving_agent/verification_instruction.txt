@@ -1,0 +1,1 @@
+Fix the skill files so validation passes. Return a fenced json block with minimal edit operations that can be programmatically applied.

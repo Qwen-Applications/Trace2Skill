@@ -1,0 +1,20 @@
+Here is the target agent's task execution log:
+
+<agent_log>
+{agent_log}
+</agent_log>
+
+Please conduct the script induction analysis in your working directory: `{working_dir}`.
+
+Relevant local paths:
+- `agent_work/` — copied target-agent working_dir contents from the trajectory
+- `test_inputs/` — reserved for later unit-test inputs
+
+Existing skill scripts (do NOT duplicate these):
+{existing_scripts}
+
+Your task:
+1. Inspect `agent_work/` and the agent log.
+2. Identify high-value, reusable script candidates.
+3. Identify concrete script-fix diagnoses for existing scripts when supported by evidence.
+4. Return only the strict `<induction_artifacts>...</induction_artifacts>` JSON payload before ACTION: TASK_COMPLETE.

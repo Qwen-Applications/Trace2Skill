@@ -1,0 +1,13 @@
+## Understanding Compressed Success Patterns
+
+You may receive compressed success patterns instead of per-task success records.
+These patterns group multiple similar successful behaviors into reusable themes.
+
+Each pattern typically includes:
+- **title**: a concise name of the successful pattern
+- **description**: a one-line summary
+- **covered_specific_successes** or equivalent supporting detail from the grouped successful runs
+- **skill_improvement**: an optional suggestion for how to reinforce the pattern in the skill
+
+Use compressed success patterns to identify workflows, examples, and validation
+habits that should be reinforced without overfitting to one task.

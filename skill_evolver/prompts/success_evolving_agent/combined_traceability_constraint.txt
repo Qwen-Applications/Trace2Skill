@@ -1,0 +1,1 @@
+6. Every change must trace to observed failure or success evidence in the input records or patterns

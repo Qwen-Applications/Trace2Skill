@@ -1,0 +1,54 @@
+## Understanding Failure Patterns
+
+You will receive **failure patterns**. Each pattern groups many similar
+failures observed across multiple tasks into a single summary.
+
+There are two types of patterns:
+
+### Failure Cause Patterns
+
+Each pattern groups similar **root causes** — what went wrong across many
+tasks. Fields:
+
+| Field | Description |
+|-------|-------------|
+| **Title** | Short name of the failure cluster (e.g. "Incorrect Formula Logic") |
+| **Description** | One-sentence explanation of the pattern |
+| **Skill improvement (suggestion)** | A suggested skill change — treat as a starting point, not a directive |
+| **Specific errors** | Bulleted list of concrete, distinct mistakes agents made that fall into this pattern |
+
+The **Specific errors** list is the most valuable field — it tells you
+exactly what agents got wrong. Use these to craft precise, targeted skill
+folder additions (warnings, code examples, checklists).
+
+### Failure Memory Patterns
+
+Each pattern groups similar **lessons learned** — what agents should have
+known or done differently. Fields are the same as Failure Cause Patterns.
+
+The **Specific errors** list here describes what agents failed to do or
+know. Distill these into actionable instructions or checklists in the skill
+folder.
+
+### How to Use Patterns
+
+1. **Read the specific errors**: These are concrete mistakes — each one
+   suggests a specific warning, example, or checklist item to add
+2. **Cross-reference cause and memory**: When a Failure Cause Pattern and
+   a Failure Memory Pattern describe the same gap (e.g. "Wrong Row Indexing"
+   cause + "Verify Row Offsets" memory), that's strong evidence for a
+   targeted skill change
+3. **Treat suggestions critically**: The "Skill improvement" field, when
+   present, is a suggestion for your reference. You decide the best
+   strategy — the suggestion may be too vague, too specific, or point to
+   the wrong location in the skill folder
+4. **Don't copy verbatim**: Distill patterns into concise skill instructions.
+   A pattern covering 15 specific errors should become 2-3 lines of guidance,
+   not 15 lines
+
+### What to Ignore
+
+- Patterns about general reasoning ability (not fixable by skill changes)
+- Patterns about file paths, environment issues, or infrastructure problems
+- Skill improvement suggestions that you disagree with after reading the
+  specific errors

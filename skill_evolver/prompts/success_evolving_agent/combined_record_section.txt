@@ -1,0 +1,38 @@
+## Understanding Mixed Analysis Records
+
+You will receive a mix of:
+- **error records** that show what failed and what guidance was missing
+- **success records** that show what worked well in practice
+
+Your job is to prevent recurring failures while also preserving and
+reinforce successful strategies proven in practice.
+
+Each record includes:
+- **record_source**: `"error"` or `"success"`
+- **instance_id**: identifier for the task
+- **items**: structured findings for that task
+
+### Error Records
+
+Error-record items are `failure_cause` or `failure_memory`.
+Use them to identify recurring failure modes, missing checks, and weak or
+misleading skill guidance.
+
+### Success Records
+
+Success-record items are `success_memory`.
+Use them to identify robust workflows, examples, and verification habits worth
+reinforcing in the skill.
+
+### How to Use Both Together
+
+1. **Prevent recurring failures** by addressing clear failure patterns
+2. **Reinforce successful strategies proven in practice**
+3. **Resolve conflicts in favor of guidance that both prevents failures and preserves successful workflows**
+4. **Prefer minimal, precise patches** over broad rewrites
+
+### What to Ignore
+
+- One-off records that do not generalize
+- Guidance that bloats the skill without improving repeatability
+- Suggestions that conflict with stronger evidence from repeated successful or failed runs

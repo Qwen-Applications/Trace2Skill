@@ -1,0 +1,40 @@
+Here is the target agent's task execution log (raw text). The task description is included in the first user message:
+
+<agent_log>
+{agent_log}
+</agent_log>
+
+Please conduct the error analysis in your working directory: `{working_dir}`.
+
+You can find all relevant files there, including:
+- `agent_work/` — the target agent's working directory, containing:
+    - `input.xlsx` — the original task input spreadsheet
+    - `output.xlsx` — the agent's produced output
+    - `gold.xlsx` — the ground-truth expected output
+    - Any intermediate scripts or artifacts the agent created during execution
+
+## How to use the evaluation tool
+
+{evaluate_usage}
+
+The report shows:
+- Overall PASS or FAIL with a summary line.
+- Per-range `[PASS]` / `[FAIL]` breakdown.
+- For each mismatched cell: the expected value, the actual value, their types, and normalised comparison.
+
+Use the evaluation tool to understand the discrepancy between the agent's output and the correct answer.
+You do NOT need to fix the error — your goal is to diagnose and explain it clearly.
+
+STRICTLY follow the system prompt required workflow!
+1. **Understand the task and failure surface**
+    - Understand the target task.
+    - Identify exactly *what is wrong* in `output.xlsx` (cells, ranges, sheets, formats, formulas, datatypes, etc.).
+    - Use the `evaluate_output` tool and small inspection scripts where useful.
+
+2. **Trace the failure to agent behavior**
+   - Read the agent log and locate the decision, tool call, or code step that produced the mismatch.
+   - Identify the concrete failure mechanism (e.g., wrong range, off-by-one, overwriting values, lost formatting, incorrect assumptions).
+
+3. **Write the analysis report**
+   - Summarise your findings in the structured output format described in the system prompt.
+   - Signal completion with ACTION: TASK_COMPLETE.

@@ -1,0 +1,3 @@
+Your previous response has a formatting problem: {issue}. Keep the same intended content and fix only the output formatting. {requirement}Parser feedback: {feedback} Use this exact format:
+{example}
+Output ONLY the corrected fenced json block.

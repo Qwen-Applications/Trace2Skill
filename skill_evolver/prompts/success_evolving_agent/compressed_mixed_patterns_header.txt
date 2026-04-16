@@ -1,0 +1,1 @@
+## Compressed Mixed Patterns (Batch {batch_idx}/{total_batches})

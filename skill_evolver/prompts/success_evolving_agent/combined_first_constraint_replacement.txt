@@ -1,0 +1,1 @@
+1. Do not remove currently useful guidance unless the mixed evidence shows a leaner instruction better prevents failures or preserves successful workflows.

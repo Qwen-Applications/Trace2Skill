@@ -1,0 +1,1 @@
+Your response was cut off or missing a complete semantic patch block. Continue from where you stopped or provide the complete output using one or more blocks delimited by '===== PATCH START =====' and '===== PATCH END ====='. Output ONLY the remaining text.

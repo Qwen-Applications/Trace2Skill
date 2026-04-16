@@ -1,0 +1,81 @@
+You are extracting one item into a concrete script artifact and a reality suite.
+
+Working directory: {working_dir}
+Copied target-agent workspace: {working_dir}/agent_work
+
+Induced item:
+<item_json>
+{item_json}
+</item_json>
+
+Original agent log:
+<agent_log>
+{agent_log}
+</agent_log>
+
+Observed reality context (pre-copied hints when available):
+<reality_context_json>
+{reality_context_json}
+</reality_context_json>
+
+Requirements:
+1. Analyze the item and the log before writing artifacts.
+2. Come up with the candidate script or fixed script.
+3. Make the reality test case by replicating the target agent's actual scenario as closely as possible.
+4. Copy files from `agent_work/` into `test_inputs/` and `test_references/` to make the case as real as possible.
+5. Verify in your own analysis that the test case is identical or as close as possible to the real scenario.
+6. Return only the strict `<item_extraction>...</item_extraction>` JSON payload.
+
+Use this schema:
+<item_extraction>{
+  "item_id": "item_0001",
+  "item_type": "generalizable_script",
+  "title": "string",
+  "script_artifact": {
+    "name": "snake_case_name",
+    "docstring": "full docstring including usage",
+    "code": "complete standalone python script",
+    "args_spec": ["..."]
+  },
+  "fix_artifact": null,
+  "reality_suite": {
+    "tests": [
+      {
+        "test_id": "reality_01",
+        "test_type": "reality",
+        "purpose": "what behavior this checks",
+        "input_files": ["test_inputs/item_0001/reality_01.xlsx"],
+        "reference_files": ["test_references/item_0001/reality_01_reference.xlsx"],
+        "script_args": ["test_inputs/item_0001/reality_01.xlsx", "test_outputs/item_0001/reality_01_output.xlsx"],
+        "hypothesis_output": "test_outputs/item_0001/reality_01_output.xlsx",
+        "validator_type": "spreadsheet_compare_workbooks",
+        "validator_path": "validators/item_0001/reality_01_validate.py",
+        "validator_config": {
+          "instruction_type": "Sheet-Level Manipulation",
+          "answer_position": "OPEN!C2:C20"
+        },
+        "expected_exit_code": 0,
+        "reality_basis": "why this mirrors the real scenario",
+        "reference_provenance": {
+          "mode": "copied_from_agent_work",
+          "source_input_path": "agent_work/input.xlsx",
+          "source_reference_path": "agent_work/output.xlsx",
+          "observed_output_available": true
+        }
+      }
+    ],
+    "scenario_verification": {
+      "used_real_input": true,
+      "used_real_output": true,
+      "verification_notes": "how you checked fidelity to the actual scenario"
+    }
+  }
+}</item_extraction>
+
+For `script_fix`, set `script_artifact` to null and use:
+"fix_artifact": {
+  "target_script": "existing_script.py",
+  "failure_mode": "...",
+  "proposed_fix_summary": "...",
+  "fixed_code": "full corrected script"
+}

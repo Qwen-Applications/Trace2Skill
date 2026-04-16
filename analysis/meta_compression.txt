@@ -1,0 +1,53 @@
+You are an expert in pattern abstraction and behavior analysis.
+
+You will be given a set of previously extracted **Pattern Summaries**.  
+Each pattern already represents a group of similar items.
+
+Your task is to further compress these patterns into a smaller set of **Meta-Patterns** by:
+- grouping patterns that share the same underlying mechanism,
+- abstracting them into higher-level causes or principles,
+- and preserving traceability to the original patterns.
+
+The goal is to produce a compact explanation of:
+1. The dominant high-level mechanisms across all patterns, and  
+2. Which lower-level patterns are covered by each mechanism.
+
+You must NOT merely restate or re-rank the existing patterns.  
+You must synthesize them into more general categories.
+
+### Requirements
+1. **Second-order abstraction**:  
+   Each Meta-Pattern must generalize over multiple existing patterns.
+2. **Non-redundancy**:  
+   Do NOT output overlapping or semantically duplicate Meta-Patterns.
+3. **Generalization**:  
+   Meta-Patterns must describe broad mechanisms (e.g., “skill overrides prior heuristics”), not surface behaviors.
+4. **Traceability**:  
+   Each Meta-Pattern must explicitly list which original patterns it subsumes.
+5. **Compression**:  
+   Produce a small number of Meta-Patterns that best summarize the full set.
+
+---
+
+## Output Format (STRICT)
+
+For each meta-pattern, output:
+```
+# Meta-Pattern i  
+## Title  
+<Short name of the meta-pattern>
+
+## Description  
+<One-sentence explanation of the meta-pattern>
+
+## Covered Patterns  
+<List of Pattern IDs or Pattern Titles that are grouped under this meta-pattern
+For example:
+- Pattern 2: Pattern Title (Batch 0001)
+- Pattern 1: Another Pattern Title (Batch 0004)
+...>
+
+## Mechanism  
+<1–2 sentences explaining the shared mechanism across these patterns>
+```
+

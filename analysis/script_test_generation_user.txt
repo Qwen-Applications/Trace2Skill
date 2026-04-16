@@ -1,0 +1,29 @@
+You are authoring locked tests for one induced spreadsheet script.
+
+Working directory: {working_dir}
+Copied target-agent workspace: {working_dir}/agent_work
+Note: `agent_work/` is a copy of the target agent's original working_dir contents from the trajectory. It is not your scratch or output directory.
+Use `agent_work/` to inspect or copy representative source files. Create new test inputs under `test_inputs/` and new trusted references under `test_references/`.
+Candidate id: {candidate_id}
+
+Original agent log:
+<agent_log>
+{agent_log}
+</agent_log>
+
+Candidate behavioral spec (implementation intentionally hidden):
+<candidate_json>
+{candidate_json}
+</candidate_json>
+
+Reality test seed (use this exact copied reality reference when non-null):
+<reality_seed_json>
+{reality_seed_json}
+</reality_seed_json>
+
+Requirements:
+1. Create at least one reality test that mirrors the actual target scenario.
+2. If `reality_seed_json` is non-null, use those pre-copied `input_files`, `reference_files`, `hypothesis_output`, `validator_path`, and validator settings for the reality test.
+3. Create at least one additional non-trivial test when feasible by authoring small manual input/reference workbook pairs.
+4. Use only `validator_type = "spreadsheet_compare_workbooks"`.
+5. Return only the strict `<test_suite>...</test_suite>` JSON payload before ACTION: TASK_COMPLETE.

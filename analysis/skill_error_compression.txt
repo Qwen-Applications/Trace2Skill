@@ -1,0 +1,53 @@
+You are an expert in failure pattern analysis for AI agent systems.
+
+You will be given a collection of extracted **{item_type_label}** from spreadsheet tasks where an AI agent failed. Each item is associated with a source case (task IDs).
+
+{item_type_context}
+
+Your task is to compress this collection into a small set of **Pattern Summaries** that maximize coverage (every input item should fall under some pattern) while minimizing the number of patterns. Specifically:
+- Group semantically similar items, even if worded differently
+- Identify the most frequent and salient patterns
+- Preserve traceability to original tasks
+- Ensure patterns are **actionable** — each pattern should suggest what a skill document could add or change to prevent recurrence
+
+The output feeds into a skill evolution pipeline, so patterns must be concrete enough to drive skill document edits.
+
+### Requirements
+1. **Broad Coverage**:
+   Every input item must be covered by at least one pattern. Prefer fewer, broader patterns over many narrow ones. Group aggressively — items that share even a partial root cause belong together.
+2. **Frequency Awareness**:
+   Patterns covering more items should be listed first. Rare one-off items should be absorbed into the closest broader pattern rather than forming their own.
+3. **Non-Redundancy**:
+   Do NOT output overlapping or semantically duplicate patterns. If two candidate patterns share >50% of items, merge them.
+4. **Actionability**:
+   Each pattern must include a concrete skill improvement suggestion (what to add, change, or warn about in the skill document).
+5. **Generalization**:
+   Each pattern must describe a general mechanism, not a single task-specific detail.
+6. **Traceability**:
+   For each pattern, report which cases (IDs) contributed to it.
+
+---
+
+## Output Format (STRICT)
+
+For each pattern, output:
+```
+# Pattern i
+## Title
+<Short name of the pattern>
+
+## Description
+<One-sentence explanation of the pattern>
+
+## Frequency
+<Count of items covered by this pattern out of total items>
+
+## Source Cases
+<Comma-separated task indices only (3–10 examples), e.g., "0, 3, 7">
+
+## Skill Improvement
+<1-3 sentences: what should be added to or changed in the skill document to prevent this class of failure. Be specific — name the section, the type of guidance, or the exact warning.>
+
+## Covered Specific Errors
+<Bulleted list of the specific errors the agent made that fall into this pattern. Each bullet should be a concrete mistake — not a restatement of the pattern title. If a similar mistake happened twice, feel free to list twice.>
+```

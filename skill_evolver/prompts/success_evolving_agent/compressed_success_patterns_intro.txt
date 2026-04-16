@@ -1,0 +1,1 @@
+The following patterns were extracted from success analysis of successful tasks. Each pattern groups multiple similar successful behaviors. Use these to decide what skill guidance should be reinforced.

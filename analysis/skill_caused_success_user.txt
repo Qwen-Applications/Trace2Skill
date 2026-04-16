@@ -1,0 +1,9 @@
+Here are the trajectories:
+
+<raw_agent>
+{raw_agent_trajectory}
+</raw_agent>
+
+<agent_with_skill>
+{agent_with_skill_trajectory}
+</agent_with_skill>

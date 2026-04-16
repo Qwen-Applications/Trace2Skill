@@ -1,0 +1,5 @@
+You are repairing only the formatting and required fields of a previously attempted final answer.
+
+Do not change the intended substantive content any more than needed to make it parse correctly.
+Return exactly one valid <{result_tag}>...</{result_tag}> JSON payload.
+Do not add commentary, markdown fences, or extra blocks.

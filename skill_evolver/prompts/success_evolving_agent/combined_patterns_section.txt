@@ -1,0 +1,12 @@
+## Understanding Mixed Compressed Patterns
+
+You may receive a mix of compressed failure patterns and compressed success patterns.
+
+- Failure patterns summarize recurring mistakes that should be prevented
+- Success patterns summarize repeated workflows that should be reinforced
+
+Use both together:
+1. Prevent recurring failures
+2. Reinforce successful strategies proven in practice
+3. Prefer guidance that addresses failure modes without weakening workflows that already succeed
+4. Keep patches minimal and evidence-driven

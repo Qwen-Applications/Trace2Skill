@@ -1,0 +1,5 @@
+Here are the pattern summaries:
+
+<patterns>
+{patterns}
+</patterns>

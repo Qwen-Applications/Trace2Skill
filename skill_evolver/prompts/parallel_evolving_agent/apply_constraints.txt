@@ -1,0 +1,9 @@
+## Constraints
+
+1. NEVER remove guidance that is currently correct and useful
+2. Do NOT modify the YAML frontmatter name or description
+3. SKILL.md must remain under 500 lines
+4. Each reference file should be under 300 lines
+5. Apply all edits from the patch faithfully
+6. Resolve any remaining inconsistencies from the merge
+7. If SKILL.md exceeds or approaches the line limit after applying edits, extract self-contained subsections into separate references/*.md files and replace the moved content with a brief summary and a link to the new reference file

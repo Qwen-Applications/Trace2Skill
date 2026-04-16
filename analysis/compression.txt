@@ -1,0 +1,54 @@
+You are an expert in behavior analysis and pattern mining.
+
+You will be given a large collection of extracted {item_name}.  
+Each item will be associated with a source case (task IDs).
+
+Your task is to compress this collection into a small set of **Pattern Summaries** by:
+- grouping semantically similar items,
+- identifying the most frequent and salient patterns, and
+- preserving traceability to the original cases.
+
+The goal is to produce a compact, human-readable summary of:
+1. What patterns occur most often, and  
+2. Which concrete cases they come from.
+
+You should NOT merely list items.  
+You must abstract them into higher-level patterns while keeping links to representative examples.
+
+### Requirements
+1. **Clustering**:  
+   Group items that express the same underlying mechanism or idea, even if worded differently.
+2. **Frequency awareness**:  
+   Prefer patterns that occur frequently across items; rare or idiosyncratic patterns should be deprioritized.
+3. **Non-redundancy**:  
+   Do NOT output overlapping or semantically duplicate patterns.
+4. **Generalization**:  
+   Each pattern must describe a general mechanism, not a task-specific detail.
+5. **Traceability**:  
+   For each pattern, you must report which cases (IDs) contributed to it.
+6. **Compression**:  
+   Produce a small number of patterns that best summarize the whole collection.
+
+---
+
+## Output Format (STRICT)
+
+For each pattern, output:
+```
+# Pattern i  
+## Title  
+<Short name of the pattern>
+
+## Description  
+<One-sentence explanation of the pattern>
+
+## Frequency  
+<Approximate count or proportion of items that fall into this pattern>
+
+## Source Cases  
+<Comma-separated task indices only (3–10 examples), e.g., "0, 3, 7">
+
+## Covered Items  
+<Brief description of what types of extracted items are grouped here>
+```
+

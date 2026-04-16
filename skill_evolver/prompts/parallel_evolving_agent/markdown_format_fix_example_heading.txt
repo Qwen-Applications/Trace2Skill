@@ -1,0 +1,16 @@
+===== PATCH START =====
+Reasoning:
+Brief summary.
+
+Changelog:
+- Brief change
+
+Items:
+
+### Item 1
+Target File: SKILL.md
+Edit Intent: Add concise guidance
+Location Hint: Add near the relevant section
+Change Instruction:
+Add the new guidance.
+===== PATCH END =====

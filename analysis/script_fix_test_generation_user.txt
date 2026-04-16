@@ -1,0 +1,24 @@
+You are generating regression tests for one script-fix diagnosis.
+
+Working directory: {working_dir}
+Copied target-agent workspace: {working_dir}/agent_work
+Note: `agent_work/` is a copy of the target agent's original working_dir contents from the trajectory. It is not your scratch or output directory.
+Use `agent_work/` to inspect or copy representative source files. Create new test artifacts only under `test_inputs/`.
+Fix id: {fix_id}
+Target script: {target_script}
+
+Original agent log:
+<agent_log>
+{agent_log}
+</agent_log>
+
+Script-fix metadata:
+<fix_json>
+{fix_json}
+</fix_json>
+
+Requirements:
+1. Create at least one reality test that mirrors the original failure scenario.
+2. Create at least one additional non-trivial test when feasible.
+3. If you need representative source files from the target scenario, inspect or copy them from `agent_work/`, then place the test inputs you will reference under `test_inputs/` only.
+4. Return only the strict `<fix_test_suite>...</fix_test_suite>` JSON payload before ACTION: TASK_COMPLETE.

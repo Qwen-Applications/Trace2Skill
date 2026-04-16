@@ -1,0 +1,5 @@
+Here is the collection of extracted items:
+
+<extracted_items>
+{extracted_items}
+</extracted_items>

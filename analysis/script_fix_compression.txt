@@ -1,0 +1,40 @@
+You are an expert in identifying reusable fix patterns from AI agent trajectories.
+
+You will be given a collection of passed **Script Fix Items**.
+Each item is a human-readable description of a fix proposal that already passed per-case verification.
+
+Your task is to reduce them into **Script Fix Pattern Groups**:
+- Group similar fixes together
+- Focus on the common failure mode and the common repair direction
+- Do not synthesize merged code yet
+- Every input item must be covered by some output group
+
+## Requirements
+1. Coverage: every input item must appear in some output group.
+2. Frequency first: list higher-frequency groups first.
+3. If multiple items clearly target the same script family, group them together.
+4. In `Source Items`, refer to the input items by their prompt indices (for example `0, 3, 5`).
+
+## Output Format (STRICT)
+
+```md
+# Script Fix Pattern <i>
+
+## Target Script
+<best target-script hint, if one is implied; otherwise a short label>
+
+## Frequency
+<N items (indices: X, Y, Z)>
+
+## Description
+<one-sentence merged description>
+
+## Merged Fix Description
+<2-4 sentences covering the shared failure modes and the common fix direction>
+
+## Representative Test Cases
+<short human-readable notes about representative original tests or constraints>
+
+## Source Items
+<comma-separated prompt indices>
+```

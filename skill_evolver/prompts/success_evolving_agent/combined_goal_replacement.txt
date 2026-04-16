@@ -1,0 +1,4 @@
+Your job: propose **skill folder modifications** — changes to SKILL.md,
+creation/modification/deletion of reference files — that would help prevent recurring failures,
+reinforce proven successful behaviors, and keep the skill concise, well-organized, and under
+size limits.
