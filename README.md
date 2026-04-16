@@ -27,16 +27,17 @@ The paper shows that this holistic, parallel consolidation strategy yields more 
 
 ## Released Skills
 
-We release the top-performing spreadsheet skills referenced in the paper under `released_skills/`:
+We release the top-performing spreadsheet skills referenced in the paper under `released_skills/`.
+These released artifacts emphasize the core Trace2Skill setting in the paper: an LLM analyzes and consolidates lessons from **its own execution traces** to either **self-deepen** an existing skill or **self-create** a new skill from scratch.
 
 - `trace2skill-xlsx-35B-combined`
-  Trace2Skill deepened `xlsx` from 35B trajectories in the combined analyst setting.
+  A **35B self-deepen** skill: the model deepens the existing `xlsx` skill using its **own 35B traces** in the combined analyst setting.
 - `xlsx-35B`
-  Trace2Skill created a spreadsheet skill from scratch in the 35B error setting.
+  A **35B self-create** skill: the model creates a spreadsheet skill from scratch using its **own 35B traces** in the error setting.
 - `trace2skill-xlsx-122B-combined`
-  Trace2Skill deepened `xlsx` from 122B trajectories in the combined analyst setting.
+  A **122B self-deepen** skill: the model deepens the existing `xlsx` skill using its **own 122B traces** in the combined analyst setting.
 - `xlsx-122B`
-  Trace2Skill created a spreadsheet skill from scratch in the 122B error setting.
+  A **122B self-create** skill: the model creates a spreadsheet skill from scratch using its **own 122B traces** in the error setting.
 
 The runtime skill tree in `spreadsheet_agent/skills/` includes the released `xlsx-35B` and `xlsx-122B` variants directly. The full paper release set is preserved separately in `released_skills/`.
 
@@ -89,3 +90,19 @@ trace2skill/
 ## Notes
 
 This repository focuses on the spreadsheet setting and released skills discussed in the paper, while keeping the core Trace2Skill evolution pipeline runnable.
+
+## Citation
+
+If you use this repository or the released skills, please cite:
+
+```bibtex
+@misc{ni2026trace2skilldistilltrajectorylocallessons,
+      title={Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills}, 
+      author={Jingwei Ni and Yihao Liu and Xinpeng Liu and Yutao Sun and Mengyu Zhou and Pengyu Cheng and Dexin Wang and Erchao Zhao and Xiaoxi Jiang and Guanjun Jiang},
+      year={2026},
+      eprint={2603.25158},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2603.25158}, 
+}
+```
