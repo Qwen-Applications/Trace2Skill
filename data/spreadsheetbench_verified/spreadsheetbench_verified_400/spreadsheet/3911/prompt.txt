@@ -1,0 +1,1 @@
+How can I distribute 120 different currency notes among employees based on their salaries using Excel? I have provided a sample sheet with the necessary details. Note: I have 120 different currency note which i want to distribute between the emp as per their salaries.

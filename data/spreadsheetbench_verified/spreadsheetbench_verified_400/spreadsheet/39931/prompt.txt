@@ -1,0 +1,1 @@
+I need to return a value from a third column by looking up and matching data contained within two other specific columns. I have attempted to use VLOOKUP and MATCH functions without success. The attached example, Sample.xlsx, demonstrates what I'm trying to achieve.

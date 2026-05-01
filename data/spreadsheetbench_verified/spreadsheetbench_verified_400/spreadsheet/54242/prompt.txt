@@ -1,0 +1,1 @@
+How can I create a formula for column E in Excel that will display 'Revenue' in each cell if the corresponding cell in the range B6 to B13 contains the word 'deposit', and 'Expenses' if it contains the word 'withdrawal'?

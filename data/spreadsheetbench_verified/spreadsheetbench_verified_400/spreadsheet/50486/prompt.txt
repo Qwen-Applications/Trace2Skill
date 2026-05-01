@@ -1,0 +1,1 @@
+Configure column A in Excel to display the text 'Chep' or 'Loscam' based on which of the two corresponding columns contains numeric values.

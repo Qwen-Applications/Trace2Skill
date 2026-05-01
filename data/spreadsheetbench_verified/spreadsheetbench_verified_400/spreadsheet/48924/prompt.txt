@@ -1,0 +1,1 @@
+How can I list all the missing dates from a sequence in column A and place them into column C in Excel?

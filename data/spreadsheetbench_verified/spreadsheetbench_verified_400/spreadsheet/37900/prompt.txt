@@ -1,0 +1,1 @@
+I need help with a formula in Excel that can automatically return a value based on the current day's date. Also, I have attached a workbook named 'sample10.xlsx' for reference.

@@ -1,0 +1,1 @@
+How to assemble three numbers into a three-digit number, with the numbers arranged in order from smallest to largest. Complete column G, bold and fill all boxed values with the color #EBF1DE

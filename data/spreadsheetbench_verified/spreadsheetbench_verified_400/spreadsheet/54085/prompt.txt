@@ -1,0 +1,1 @@
+How can I create a formula in Excel that populates column C with all the items from column B, with the exception of excluding a specific item listed in column A? Answers should be in C2:C4 in the order they appear in column B.

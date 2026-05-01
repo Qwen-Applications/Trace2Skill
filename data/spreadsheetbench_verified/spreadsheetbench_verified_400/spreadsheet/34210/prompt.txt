@@ -1,0 +1,1 @@
+How can I apply a function or formula in Excel to automatically fill in empty cells in column C with the value in column A? For instance, C1:C10 should be fill in Company A.

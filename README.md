@@ -73,8 +73,9 @@ From the repository root, run the SpreadsheetBench agent, evaluate outputs, anal
 | Evaluate outputs | `python evaluate_with_official.py --data_path <dataset> --output_dir <outputs>` | Official-compatible evaluation results |
 | Match results and logs | `python analyze_results.py --help` | Failure triage records |
 | Agentic error analysis | `python analysis/run_error_analysis.py --help` | `parsed_error_records.json` |
-| Single-call error analysis | `python analysis/run_error_analysis_llm.py --help` | `parsed_error_records.json` |
 | Single-call success analysis | `python analysis/run_success_analysis_llm.py --help` | `parsed_success_records.json` |
+| Parse error analysis | `python analysis/parse_error_analysis_outputs.py --help` | Parsed error JSON |
+| Parse success analysis | `python analysis/parse_success_analysis_outputs.py --help` | Parsed success JSON |
 | Parallel error-driven skill evolution | `python -m skill_evolver.run_parallel_skill_evolution --help` | Updated skill directory |
 | Parallel combined skill evolution | `python -m skill_evolver.run_parallel_combined_skill_evolution --help` | Updated skill directory |
 
@@ -101,14 +102,187 @@ python -m skill_evolver.run_parallel_skill_evolution \
 
 The skill-evolver entrypoints accept either parsed JSON files or the corresponding analysis output directories directly.
 
+## 4. Reproduction Note
+
+The spreadsheet verified data for reproduction is included under `data/spreadsheetbench_verified/spreadsheetbench_verified_400`. The commands below cover baseline evaluation, error/success analysis, Trace2Skill evolution, and evolved-skill evaluation. Set `MODEL` to your OpenAI-compatible served model name or path. The commands use the Qwen reproduction configs in `gen_config/`; for Gemma runs, replace them with `gen_config/gemma4_instruct.json` and `gen_config/gemma4_thinking.json`.
+
+Run the baseline spreadsheet agent on the training split (`0:200`) and produce the error/success analysis records:
+
+```bash
+DATA_PATH=data/spreadsheetbench_verified/spreadsheetbench_verified_400
+MODEL=Qwen3.5-122B-A10B
+WORKERS=128
+BASELINE_DIR=outputs/reproduce/baseline_run
+GENERATION_CONFIG=gen_config/qwen3.5_35B_122B_instruct_reasoning.json
+THINK_GENERATION_CONFIG=gen_config/qwen3.5_35B_122B_thinking_reasoning.json
+
+python run_spreadsheetbench.py \
+  --data_path "$DATA_PATH" \
+  --model "$MODEL" \
+  --log_dir "$BASELINE_DIR/logs" \
+  --log_format markdown \
+  --working_dir "$BASELINE_DIR/work" \
+  --output_dir "$BASELINE_DIR/outputs" \
+  --max_turns 100 \
+  --workers "$WORKERS" \
+  --skills_dir spreadsheet_agent/skills \
+  --generation_config "$GENERATION_CONFIG" \
+  --start_idx 0 \
+  --end_idx 200
+
+python evaluate_with_official.py \
+  --data_path "$DATA_PATH" \
+  --output_dir "$BASELINE_DIR/outputs" \
+  --verbose \
+  --start_idx 0 \
+  --end_idx 200
+
+python analyze_results.py \
+  --eval_results "$BASELINE_DIR/outputs/eval_official_results.json" \
+  --log_dir "$BASELINE_DIR/logs"
+
+python analysis/run_error_analysis.py \
+  --data_path "$DATA_PATH" \
+  --work_dir "$BASELINE_DIR/work" \
+  --logs_dir "$BASELINE_DIR/logs" \
+  --output_dir "$BASELINE_DIR/error_analysis" \
+  --model "$MODEL" \
+  --workers "$WORKERS" \
+  --generation_config "$GENERATION_CONFIG" \
+  --max_turns 100
+
+python analysis/run_success_analysis_llm.py \
+  --logs_dir "$BASELINE_DIR/logs" \
+  --output_dir "$BASELINE_DIR/success_analysis" \
+  --model "$MODEL" \
+  --max_workers "$WORKERS" \
+  --generation_config "$THINK_GENERATION_CONFIG"
+
+python analysis/parse_error_analysis_outputs.py \
+  --input_dir "$BASELINE_DIR/error_analysis" \
+  --output "$BASELINE_DIR/error_analysis_parsed.json" 2>&1 \
+  | tee "$BASELINE_DIR/error_analysis_parsed.log"
+
+python analysis/parse_success_analysis_outputs.py \
+  --input_dir "$BASELINE_DIR/success_analysis" \
+  --output "$BASELINE_DIR/success_analysis_parsed.json" 2>&1 \
+  | tee "$BASELINE_DIR/success_analysis_parsed.log"
+```
+
+Run Trace2Skill evolution from the parsed training-split error analysis records:
+
+```bash
+SEED=41
+PATCH_FORMAT=json
+EVOLVE_ROOT=outputs/reproduce/skill_evolution_seed_${SEED}
+EVOLUTION_DIR="$EVOLVE_ROOT/error_driven_skill_evolution"
+EVOLVED_RUN_DIR=outputs/reproduce/evolved_run_seed_${SEED}
+EVOLVED_SKILLS="$EVOLUTION_DIR/skills"
+
+mkdir -p "$EVOLVED_SKILLS"
+cp -r spreadsheet_agent/skills/. "$EVOLVED_SKILLS"
+
+python -m skill_evolver.run_parallel_skill_evolution \
+  --input-json "$BASELINE_DIR/error_analysis_parsed.json" \
+  --skill-dir "$EVOLVED_SKILLS/xlsx" \
+  --model "$MODEL" \
+  --verbose \
+  --batch-size 1 \
+  --changelog "$EVOLUTION_DIR/change.log" \
+  --save-intermediates \
+  --intermediates-dir "$EVOLUTION_DIR/intermediates" \
+  --max-workers "$WORKERS" \
+  --prompt generic \
+  --generation-config "$THINK_GENERATION_CONFIG" \
+  --parse-failure-dir "$EVOLUTION_DIR/parse_failures" \
+  --patch-pipeline "$PATCH_FORMAT" \
+  --seed "$SEED"
+```
+
+Because the pipeline is long and the ReAct agent can work up to 100 steps, exact 100% reproduction can be difficult even when all random seeds are controlled. The general trend and paper takeaways should still be reproducible. Also, because all skills are modified by LLMs, a single hallucinated edit can damage overall skill robustness. To reduce this risk, run the training-set validation below and verify that the Trace2Skill-evolved skill does not hurt training-set performance compared with the baseline skill before using it for final evaluation.
+
+In the paper, we ran skill evolution plus this training-set validation with three random seeds, then selected the evolved skill with the best training-set validation performance before evaluating it on the held-out split.
+
+For that training-set validation on the evolution split (`0:200`), compare the baseline and evolved skill `eval_official_results.json` summaries:
+
+```bash
+VALIDATION_DIR=outputs/reproduce/validation_train
+
+python run_spreadsheetbench.py \
+  --data_path "$DATA_PATH" \
+  --model "$MODEL" \
+  --log_dir "$VALIDATION_DIR/baseline_logs" \
+  --working_dir "$VALIDATION_DIR/baseline_work" \
+  --output_dir "$VALIDATION_DIR/baseline_outputs" \
+  --max_turns 100 \
+  --workers "$WORKERS" \
+  --skills_dir spreadsheet_agent/skills \
+  --seeds "$SEED" \
+  --generation_config "$GENERATION_CONFIG" \
+  --start_idx 0 \
+  --end_idx 200
+
+python evaluate_with_official.py \
+  --data_path "$DATA_PATH" \
+  --output_dir "$VALIDATION_DIR/baseline_outputs" \
+  --start_idx 0 \
+  --end_idx 200
+
+python run_spreadsheetbench.py \
+  --data_path "$DATA_PATH" \
+  --model "$MODEL" \
+  --log_dir "$VALIDATION_DIR/evolved_logs" \
+  --working_dir "$VALIDATION_DIR/evolved_work" \
+  --output_dir "$VALIDATION_DIR/evolved_outputs" \
+  --max_turns 100 \
+  --workers "$WORKERS" \
+  --skills_dir "$EVOLVED_SKILLS" \
+  --seeds "$SEED" \
+  --generation_config "$GENERATION_CONFIG" \
+  --start_idx 0 \
+  --end_idx 200
+
+python evaluate_with_official.py \
+  --data_path "$DATA_PATH" \
+  --output_dir "$VALIDATION_DIR/evolved_outputs" \
+  --start_idx 0 \
+  --end_idx 200
+```
+
+After selecting the best seed by training-set validation, evaluate that evolved skill on the held-out split (`200:400`):
+
+```bash
+python run_spreadsheetbench.py \
+  --data_path "$DATA_PATH" \
+  --model "$MODEL" \
+  --log_dir "$EVOLVED_RUN_DIR/logs" \
+  --log_format markdown \
+  --working_dir "$EVOLVED_RUN_DIR/work" \
+  --output_dir "$EVOLVED_RUN_DIR/outputs" \
+  --max_turns 100 \
+  --workers "$WORKERS" \
+  --skills_dir "$EVOLVED_SKILLS" \
+  --seeds "$SEED" \
+  --generation_config "$GENERATION_CONFIG" \
+  --start_idx 200 \
+  --end_idx 400
+
+python evaluate_with_official.py \
+  --data_path "$DATA_PATH" \
+  --output_dir "$EVOLVED_RUN_DIR/outputs" \
+  --start_idx 200 \
+  --end_idx 400
+```
+
 ## Repository Structure
 
 ```text
 Trace2Skill/
 ├── README.md
 ├── analysis/                           # Error/success trajectory analysis scripts and prompts
+│   ├── parse_error_analysis_outputs.py
+│   ├── parse_success_analysis_outputs.py
 │   ├── run_error_analysis.py           # Agentic error analyst
-│   ├── run_error_analysis_llm.py       # Single-call error analyst
 │   └── run_success_analysis_llm.py     # Single-call success analyst
 ├── released_skills/                    # Released paper skill artifacts
 │   ├── trace2skill-xlsx-35B-combined/

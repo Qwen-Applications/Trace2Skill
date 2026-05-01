@@ -1,0 +1,1 @@
+How can I create a lookup formula that returns results based on header names, which works correctly when dragged down in Excel 2019?

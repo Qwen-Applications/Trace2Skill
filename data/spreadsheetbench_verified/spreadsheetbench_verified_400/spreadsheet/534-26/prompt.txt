@@ -1,0 +1,1 @@
+How can I write a macro that will delete the entire column in an Excel sheet if the Date value in the column is earlier than the current month and year?

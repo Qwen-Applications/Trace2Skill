@@ -1,0 +1,1 @@
+How can I create a formula in Excel to list all the branches in column A that do not have a corresponding tick mark in column I? My attempts with an advanced filter have been unsuccessful, and I can't seem to extract the unticked branches correctly.

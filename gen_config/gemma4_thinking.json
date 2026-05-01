@@ -1,0 +1,11 @@
+{
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "timeout": 1800,
+  "extra_body": {
+    "top_k": 64,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    }
+  }
+}

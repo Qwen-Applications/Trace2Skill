@@ -1,0 +1,1 @@
+I have an Excel sheet where I am concatenating strings in column G in the format ["/out/","https://theurl.top/images/2.jpg ", "text?", "text!"]. I need to add a prefix "//" to this concatenation pattern (eg, //[ ), Apply formula but only for rows that are highlighted with a yellow color. How can I accomplish this? Could you implement this based on my description?

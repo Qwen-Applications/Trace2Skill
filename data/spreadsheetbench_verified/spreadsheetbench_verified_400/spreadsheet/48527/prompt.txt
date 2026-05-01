@@ -1,0 +1,1 @@
+How can I retrieve unique text from the third column of a worksheet where the first two columns contain the same text, and place it into a fourth column?

@@ -1,0 +1,1 @@
+How can I extract numerical values and determine the valid decimal sign from a text string containing various currency positions and formats in Excel?

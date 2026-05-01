@@ -1,0 +1,3 @@
+Create a formula in Excel to sum a range of cells that contains the #NUM error value, as illustrated in the attached '#NUM.xlsx' spreadsheet?  
+My current formula is:
+SUM(C2:C13)

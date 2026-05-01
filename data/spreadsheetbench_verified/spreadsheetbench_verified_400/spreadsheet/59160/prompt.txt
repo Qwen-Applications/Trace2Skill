@@ -1,0 +1,1 @@
+How can I compute the number of occurrences of 'Yes' or 'No' in a worksheet for a specific date using a formula, considering that the worksheet contains Date data? I have provided a sample workbook for reference.

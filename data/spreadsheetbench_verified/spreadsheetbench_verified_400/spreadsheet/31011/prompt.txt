@@ -1,0 +1,1 @@
+How can I create a formula in cell R6 that totals the values within a specified table range where the dates fall between P6 and Q6 in column A, and the times fall between R3 and R4 in row 1?

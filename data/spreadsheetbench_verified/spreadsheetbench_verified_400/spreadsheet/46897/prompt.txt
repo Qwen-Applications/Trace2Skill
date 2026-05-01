@@ -1,0 +1,1 @@
+How can I create a formula in Excel that counts the instances of a specific text or number in a column that matches a specified header title?

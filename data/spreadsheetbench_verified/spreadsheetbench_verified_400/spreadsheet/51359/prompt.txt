@@ -1,0 +1,1 @@
+How can I calculate the total of all consecutive 1's in a column in Excel, where only the groups of adjacent cells with a sum of 2 or more should be counted?
