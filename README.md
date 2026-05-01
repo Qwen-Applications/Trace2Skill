@@ -106,19 +106,52 @@ The skill-evolver entrypoints accept either parsed JSON files or the correspondi
 
 The spreadsheet verified data for reproduction is included under `data/spreadsheetbench_verified/spreadsheetbench_verified_400`. The commands below cover baseline evaluation, error/success analysis, Trace2Skill evolution, and evolved-skill evaluation. Set `MODEL` to your OpenAI-compatible served model name or path. The commands use the Qwen reproduction configs in `gen_config/`; for Gemma runs, replace them with `gen_config/gemma4_instruct.json` and `gen_config/gemma4_thinking.json`.
 
-Run the baseline spreadsheet agent on the training split (`0:200`) and produce the error/success analysis records:
+Set common reproduction variables:
 
 ```bash
 DATA_PATH=data/spreadsheetbench_verified/spreadsheetbench_verified_400
 MODEL=Qwen3.5-122B-A10B
 WORKERS=128
+SEED=41
+CLI_ONLY_DIR=outputs/reproduce/cli_only_baseline
 BASELINE_DIR=outputs/reproduce/baseline_run
 GENERATION_CONFIG=gen_config/qwen3.5_35B_122B_instruct_reasoning.json
 THINK_GENERATION_CONFIG=gen_config/qwen3.5_35B_122B_thinking_reasoning.json
+```
 
+Run the `cli_only` baseline (i.e., no skill; only command line as a tool) on the held-out split (`200:400`) for comparison:
+
+```bash
 python run_spreadsheetbench.py \
   --data_path "$DATA_PATH" \
   --model "$MODEL" \
+  --agent cli_only \
+  --log_dir "$CLI_ONLY_DIR/logs" \
+  --log_format markdown \
+  --working_dir "$CLI_ONLY_DIR/work" \
+  --output_dir "$CLI_ONLY_DIR/outputs" \
+  --max_turns 100 \
+  --workers "$WORKERS" \
+  --seeds "$SEED" \
+  --generation_config "$GENERATION_CONFIG" \
+  --start_idx 200 \
+  --end_idx 400
+
+python evaluate_with_official.py \
+  --data_path "$DATA_PATH" \
+  --output_dir "$CLI_ONLY_DIR/outputs" \
+  --verbose \
+  --start_idx 200 \
+  --end_idx 400
+```
+
+Run the skill-preloaded spreadsheet agent on the training split (`0:200`) and produce the error/success analysis records:
+
+```bash
+python run_spreadsheetbench.py \
+  --data_path "$DATA_PATH" \
+  --model "$MODEL" \
+  --agent cli_skill_preloaded \
   --log_dir "$BASELINE_DIR/logs" \
   --log_format markdown \
   --working_dir "$BASELINE_DIR/work" \
@@ -126,6 +159,7 @@ python run_spreadsheetbench.py \
   --max_turns 100 \
   --workers "$WORKERS" \
   --skills_dir spreadsheet_agent/skills \
+  --seeds "$SEED" \
   --generation_config "$GENERATION_CONFIG" \
   --start_idx 0 \
   --end_idx 200
@@ -172,7 +206,6 @@ python analysis/parse_success_analysis_outputs.py \
 Run Trace2Skill evolution from the parsed training-split error analysis records:
 
 ```bash
-SEED=41
 PATCH_FORMAT=json
 EVOLVE_ROOT=outputs/reproduce/skill_evolution_seed_${SEED}
 EVOLUTION_DIR="$EVOLVE_ROOT/error_driven_skill_evolution"

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-Cleaned SpreadsheetBench runner for the public repository.
+SpreadsheetBench runner for the public Trace2Skill repository.
 
-This is a reduced version of the original benchmark runner that keeps only the
-skill-preloaded spreadsheet agent flow used by the paper artifacts.
+Supports both the CLI-only baseline and the skill-preloaded spreadsheet agent.
 """
 
 from __future__ import annotations
@@ -24,16 +23,18 @@ from tqdm import tqdm
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 from react_agent import ApiChatClient, OpenAIClient
-from spreadsheet_agent import CLISkillPreloadedAgent, SpreadsheetBenchRunner
+from spreadsheet_agent import CLIOnlyAgent, CLISkillPreloadedAgent, SpreadsheetBenchRunner
 
 
 ALLOWED_SKILL_DIR_NAMES = {"xlsx", "xlsx-122B", "xlsx-35B"}
+AVAILABLE_AGENTS = {
+    "cli_only": CLIOnlyAgent,
+    "cli_skill_preloaded": CLISkillPreloadedAgent,
+}
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Run the SpreadsheetBench skill-preloaded agent."
-    )
+    parser = argparse.ArgumentParser(description="Run a SpreadsheetBench agent.")
     parser.add_argument(
         "--data_path",
         type=str,
@@ -53,10 +54,17 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Working directory for agent execution",
     )
     parser.add_argument(
+        "--agent",
+        type=str,
+        default="cli_skill_preloaded",
+        choices=list(AVAILABLE_AGENTS.keys()),
+        help="Agent to use",
+    )
+    parser.add_argument(
         "--skills_dir",
         type=str,
         default=str(Path(__file__).resolve().parent / "spreadsheet_agent" / "skills"),
-        help="Path to spreadsheet skills root directory",
+        help="Path to spreadsheet skills root directory for cli_skill_preloaded",
     )
     parser.add_argument(
         "--model",
@@ -186,10 +194,11 @@ def validate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
         parser.error("--repeat and --num_random_seeds > 1 are mutually exclusive")
     if args.num_random_seeds < 1:
         parser.error("--num_random_seeds must be >= 1")
-    resolved_skills_dir = _resolve_skills_dir(args.skills_dir)
-    if not resolved_skills_dir.is_dir():
-        parser.error(f"skills directory not found: {resolved_skills_dir}")
-    _validate_allowed_skills(resolved_skills_dir)
+    if args.agent == "cli_skill_preloaded":
+        resolved_skills_dir = _resolve_skills_dir(args.skills_dir)
+        if not resolved_skills_dir.is_dir():
+            parser.error(f"skills directory not found: {resolved_skills_dir}")
+        _validate_allowed_skills(resolved_skills_dir)
 
 
 def _resolve_skills_dir(skills_dir: str) -> Path:
@@ -257,6 +266,10 @@ def _build_client(args):
     )
 
 
+def _build_openai_client(args):
+    return _build_client(args)
+
+
 def _parse_seed_csv(seed_csv: str) -> list[int]:
     seeds: list[int] = []
     for token in seed_csv.split(","):
@@ -297,20 +310,36 @@ def _results_file_for_seed(base_results_file: str | None, seed: int) -> str | No
     return f"{root}_seed_{seed}{ext}"
 
 
-def create_agent(args):
-    client = _build_client(args)
+def create_agent(args, worker_id: int = 0, scripts_dir: str | None = None):
+    """Create an agent instance for a worker."""
+    client = _build_openai_client(args)
+
+    agent_class = AVAILABLE_AGENTS[args.agent]
     agent_kwargs = {
         "client": client,
         "temperature": args.temperature,
         "verbose": args.verbose,
-        "skills_dir": str(_resolve_skills_dir(args.skills_dir)),
     }
     if args.max_turns is not None:
         agent_kwargs["max_turns"] = args.max_turns
     if args.log_dir:
         agent_kwargs["log_dir"] = args.log_dir
         agent_kwargs["log_format"] = args.log_format
-    return CLISkillPreloadedAgent(**agent_kwargs)
+
+    # For cli_script_making agent, each worker needs its own script_library
+    if args.agent == "cli_script_making" and scripts_dir is not None:
+        agent_kwargs["scripts_dir"] = scripts_dir
+
+    # For skill agents, pass custom skills directory if specified
+    if args.agent in ("cli_skill", "cli_skill_preloaded") and getattr(args, "skills_dir", None):
+        skills_path = os.path.abspath(args.skills_dir)
+        # If the path points to a specific skill folder (contains SKILL.md),
+        # use its parent as the skills root directory
+        if os.path.isfile(os.path.join(skills_path, "SKILL.md")):
+            skills_path = os.path.dirname(skills_path)
+        agent_kwargs["skills_dir"] = skills_path
+
+    return agent_class(**agent_kwargs)
 
 
 def instance_has_outputs(instance, output_dir: str, data_path: str) -> bool:
