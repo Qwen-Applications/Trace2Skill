@@ -142,7 +142,7 @@ class CLIOnlyAgent(BaseSpreadsheetAgent):
         working_dir = os.path.abspath(context.working_dir)
         input_file = os.path.abspath(context.input_file)
         output_file = os.path.abspath(context.output_file)
-
+        
         return f"""Below is the spreadsheet manipulation question you need to solve:
 
 ### working_directory
